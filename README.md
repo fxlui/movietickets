@@ -5,6 +5,7 @@ Python 3(.6) with PyQt5
 ## Usage
 Data is stored in csv files with formats of:
 cinema.csv
-| T        | B           | C  |
-| ------------- |:-------------:| -----:|
-| T     | B | C |
+Markdown | Less | Pretty
+--- | --- | ---
+*Still* | `renders` | **nicely**
+1 | 2 | 3
