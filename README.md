@@ -7,7 +7,5 @@ Data is stored in csv files with formats of:
 
 cinema.csv
 
-Markdown | Less | Pretty
---- | --- | ---
-*Still* | `renders` | **nicely**
-1 | 2 | 3
+ID | Cinema Name | Cinema Description | Phone Number | Address | GMapID
+--- | --- | --- | --- | --- | ---
