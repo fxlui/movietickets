@@ -1,5 +1,5 @@
 # movietickets
-A cinema booking system made for an assessment (under development)
+A cinema booking system made for a school assessment
 ## Dependencies
 Python 3(.6) with PyQt5
 ## Usage
@@ -24,5 +24,3 @@ CinemaID | MovieID | Date | Time | Seats Taken
 
 BookingID | SessionID | First Name | Last Name | Phone Number
 --- | --- | --- | --- | ---
-
-## X
