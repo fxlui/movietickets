@@ -24,3 +24,6 @@ CinemaID | MovieID | Date | Time | Seats Taken
 
 BookingID | SessionID | First Name | Last Name | Phone Number
 --- | --- | --- | --- | ---
+
+## License
+GNU General Public License v3.0
