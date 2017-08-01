@@ -8,4 +8,3 @@ Data is stored in csv files with formats of:
 cinema.csv
 
 ID | Cinema Name | Cinema Description | Phone Number | Address | GMapID
---- | --- | --- | --- | --- | ---
