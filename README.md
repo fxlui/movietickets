@@ -18,4 +18,11 @@ ID | Movie Name | YouTubeID | Rating
 ### session.csv
 
 CinemaID | MovieID | Date | Time | Seats Taken
---- | --- | --- | --- | --- | ---
+--- | --- | --- | --- | ---
+
+### session.csv
+
+BookingID | SessionID | First Name | Last Name | Phone Number
+--- | --- | --- | --- | ---
+
+## X
