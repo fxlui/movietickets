@@ -24,7 +24,7 @@ ID | Movie Name | YouTubeID | Rating
 CinemaID | MovieID | Date | Time | Seats Taken
 --- | --- | --- | --- | ---
 
-### session.csv
+### booking.csv
 
 BookingID | SessionID | First Name | Last Name | Phone Number
 --- | --- | --- | --- | ---
