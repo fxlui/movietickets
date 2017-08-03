@@ -2,7 +2,7 @@
 # @imnotpopo
 
 # Importing modules
-import sys, csv
+import sys, csv, base64
 from PyQt5 import uic, QtCore, QtWidgets, QtGui, QtWebEngineWidgets
 from PyQt5.QtWidgets import (QWidget, QApplication, QMessageBox)
 from PyQt5.QtGui import QPixmap
@@ -198,7 +198,6 @@ class Ui(QWidget):
                         ticnumbox = getattr(self, "tbox%d" % m)
                         l = str(l)
                         ticnumbox.addItem(l)
-        
                 self.show()
 
     def buyTic2(self, mindex, cindex, ilist):
@@ -271,10 +270,10 @@ class Ui(QWidget):
             self.tqlabel.setText(str(sum(ticlist)))
             self.totallabel.setText("$%d" % totalprice)
             dt = [ct1, ct2]
-            self.continueB2.clicked.connect(lambda: self.buyTic3(mindex, cindex, ilist, sum(ticlist), dt, seatTaken))
+            self.continueB2.clicked.connect(lambda: self.buyTic3(mindex, cindex, ilist, sum(ticlist), dt, seatTaken, totalprice))
     
 
-    def buyTic3(self, mindex, cindex, ilist, ticnum, dt, st):
+    def buyTic3(self, mindex, cindex, ilist, ticnum, dt, st, tp):
         # Choosing Seat
         self.checkTab.setTabEnabled(1, False)
         self.checkTab.setTabEnabled(2, True)
@@ -284,13 +283,14 @@ class Ui(QWidget):
         self.backButton_3.clicked.connect(lambda: self.checkTab.setTabEnabled(2, False))
         self.backButton_3.clicked.connect(lambda: self.checkTab.setCurrentWidget(self.viewTab))
         self.checkTab.setCurrentWidget(self.seatTab)
-        self.continueB3.clicked.connect(lambda: self.buyTic4(mindex, cindex, ilist, ticnum, dt))
+        self.continueB3.clicked.connect(lambda: self.buyTic4(mindex, cindex, ilist, ticnum, dt, tp))
         self.filmName_3.setText(movieDetails[mindex][1])
         self.cinemaName_3.setText(cinemaDetails[cindex][1])
         self.dateC_2.setText(dt[0])
         self.timeC_2.setText(dt[1])
         for sbt in range(1,19):
             seatbutton = getattr(self, "ss%d" % sbt)
+            seatbutton.setCheckable(True)
             greenseat = QPixmap('images/green.png')
             seatbutton.setIcon(QtGui.QIcon(greenseat))
         for tk in ilist:
@@ -303,7 +303,7 @@ class Ui(QWidget):
             redseat = QPixmap('images/red.png')
             takenseat.setIcon(QtGui.QIcon(redseat))
 
-    def buyTic4(self, mindex, cindex, ilist, ticnum, dt):
+    def buyTic4(self, mindex, cindex, ilist, ticnum, dt, tp):
         # Validating seat
         choseSeat = []
         for sbt in range(1,19):
@@ -330,9 +330,9 @@ class Ui(QWidget):
             self.backButton_4.clicked.connect(lambda: self.checkTab.setCurrentWidget(self.seatTab))
             try: self.continueB4.clicked.disconnect()
             except Exception: pass
-            self.continueB4.clicked.connect(lambda: self.buyTic5(mindex, cindex, ilist, choseSeat, dt))
+            self.continueB4.clicked.connect(lambda: self.buyTic5(mindex, cindex, ilist, choseSeat, dt, tp))
 
-    def buyTic5(self, mindex, cindex, ilist, seat, dt):
+    def buyTic5(self, mindex, cindex, ilist, seat, dt, tp):
         # Making sure payment details are correct + update CSV files
         fname = str(self.fnbox.text())
         lname = str(self.lnbox.text())
@@ -344,8 +344,6 @@ class Ui(QWidget):
         exmm = str(self.exmm.currentText())
         exyy = str(self.exyy.currentText())
         excvv = str(self.excvv.text())
-        from time import localtime, strftime
-        currm = strftime("%m", localtime())
         if phone.isdigit() == False or phone[:2] != "04":
             warning = QMessageBox.question(self, 
                 'Wrong phone number format.',"Wrong phone number format.\nPlease enter your phone number in the format of 04XXXXXXXX without space.",
@@ -357,11 +355,6 @@ class Ui(QWidget):
         excvv.isdigit() == False:
             warning = QMessageBox.question(self, 
                 'Wrong credit card number format.',"Wrong credit card number format.\nPlease make sure you entered the correct digits.",
-                 QMessageBox.Ok, QMessageBox.Ok)
-            proceed = False
-        elif int(exmm) <= int(currm):
-            warning = QMessageBox.question(self, 
-                'Your credit card has expired.',"Your credit card has expired.\nPlease make sure you entered the correct details.",
                  QMessageBox.Ok, QMessageBox.Ok)
             proceed = False
         else:
@@ -382,6 +375,7 @@ class Ui(QWidget):
                     data = overrow.get(line, row)
                     writer.writerow(data)
             # Generate Session ID and Update Bookings CSV
+            phone = base64.b64encode(phone.encode())
             from time import localtime, strftime
             from random import randint
             sid = strftime("%Y%m%d%H%M%S", localtime()) + str(randint(100, 999))
@@ -391,6 +385,8 @@ class Ui(QWidget):
             self.bbidl.setText("Please take note of your booking ID: "+ sid)
             self.checkTab.setTabEnabled(3, False)
             self.checkTab.setTabEnabled(4, True)
+            self.seats.setText(str(len(seat)) + ' Ticket(s)')
+            self.price.setText('$' + str(tp))
             self.filmName_4.setText(movieDetails[mindex][1])
             self.cinemaName_4.setText(cinemaDetails[cindex][1])
             self.dateC_3.setText(dt[0])
