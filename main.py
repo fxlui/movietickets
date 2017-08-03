@@ -185,7 +185,7 @@ class Ui(QWidget):
                     self.exmm.addItem(str(i))
                 for i in range(17,21):
                     self.exyy.addItem(str(i))
-                    duplist = []
+                duplist = []
                 for l in ilist:
                     forlist = sessionDetails[l]
                     duplist.append(forlist[2])
@@ -198,6 +198,7 @@ class Ui(QWidget):
                         ticnumbox = getattr(self, "tbox%d" % m)
                         l = str(l)
                         ticnumbox.addItem(l)
+        
                 self.show()
 
     def buyTic2(self, mindex, cindex, ilist):
@@ -271,6 +272,7 @@ class Ui(QWidget):
             self.totallabel.setText("$%d" % totalprice)
             dt = [ct1, ct2]
             self.continueB2.clicked.connect(lambda: self.buyTic3(mindex, cindex, ilist, sum(ticlist), dt, seatTaken))
+    
 
     def buyTic3(self, mindex, cindex, ilist, ticnum, dt, st):
         # Choosing Seat
@@ -281,7 +283,7 @@ class Ui(QWidget):
         self.backButton_3.clicked.connect(lambda: self.checkTab.setTabEnabled(1, True))
         self.backButton_3.clicked.connect(lambda: self.checkTab.setTabEnabled(2, False))
         self.backButton_3.clicked.connect(lambda: self.checkTab.setCurrentWidget(self.viewTab))
-        self.checkTab.setCurrentWidget(self. seatTab)
+        self.checkTab.setCurrentWidget(self.seatTab)
         self.continueB3.clicked.connect(lambda: self.buyTic4(mindex, cindex, ilist, ticnum, dt))
         self.filmName_3.setText(movieDetails[mindex][1])
         self.cinemaName_3.setText(cinemaDetails[cindex][1])
@@ -366,6 +368,7 @@ class Ui(QWidget):
             proceed = True
         # Update Session CSV file
         if proceed == True:
+            window.setWindowTitle("Booking Successful")
             for row in ilist:
                 if dt[0] == sessionDetails[row][2] and dt[1] == sessionDetails[row][3]:
                     details = sessionDetails[row]
