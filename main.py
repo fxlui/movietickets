@@ -166,7 +166,7 @@ class Ui(QWidget):
             if not ilist:
                 choice = QMessageBox.question(self, 'No sessions for this movie!',
                     "No sessions for this movie.\nPlease select a different movie/cinema.", QMessageBox.Ok, QMessageBox.Ok)
-                self.returnHome()
+                #self.returnHome()
             else:
                 self.close()
                 super(Ui, self).__init__()
@@ -259,6 +259,7 @@ class Ui(QWidget):
             self.dateC.setText(ct1)
             self.timeC.setText(ct2)
             totalprice = []
+            # Calculate the price of tickets chosen
             for m in range(1,9):
                 ticlabel = getattr(self, "nlabel%d" % m)
                 ticlabel.setText(str(ticlist[m-1]))
