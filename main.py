@@ -2,7 +2,7 @@
 # @imnotpopo
 
 # Importing modules
-import sys, csv, base64
+import sys, csv, base64, re
 from PyQt5 import uic, QtCore, QtWidgets, QtGui, QtWebEngineWidgets
 from PyQt5.QtWidgets import (QWidget, QApplication, QMessageBox)
 from PyQt5.QtGui import QPixmap
@@ -28,6 +28,13 @@ with open('session.csv', encoding="utf-8") as csvfile:
 global ifcinema, ifmovie
 ifcinema = -1
 ifmovie = -1
+
+# Used for sorting lists
+def atoi(text):
+    return int(text) if text.isdigit() else text
+
+def natural_keys(text):
+    return [ atoi(c) for c in re.split('(\d+)', text) ]
 
 class Ui(QWidget):
     def __init__(self):
@@ -192,6 +199,7 @@ class Ui(QWidget):
                     duplist.append(forlist[2])
                     #self.timeSelect.addItem(forlist[3])
                 dup = list(set(duplist))
+                dup.sort(key=natural_keys)
                 for i in list(dup):
                     self.dateSelect.addItem(i)
                 self.setTime(cindex, mindex)
@@ -212,6 +220,7 @@ class Ui(QWidget):
             forlist = sessionDetails[i]
             if forlist[0] == str(cid) and forlist[1] == str(mid) and forlist[2] == date:
                 timelist.append(forlist[3])
+        timelist.sort(key=natural_keys)
         for times in timelist:
             self.timeSelect.addItem(times)
 
@@ -360,7 +369,7 @@ class Ui(QWidget):
         exmm = str(self.exmm.currentText())
         exyy = str(self.exyy.currentText())
         excvv = str(self.excvv.text())
-        if phone.isdigit() == False or phone[:2] != "04":
+        if phone.isdigit() == False or phone[:2] != "04" or len(phone) != 10:
             warning = QMessageBox.question(self, 
                 'Wrong phone number format.',"Wrong phone number format.\nPlease enter your phone number in the format of 04XXXXXXXX without space.",
                  QMessageBox.Ok, QMessageBox.Ok)
@@ -368,9 +377,16 @@ class Ui(QWidget):
         elif ccn1.isdigit() == False or ccn2.isdigit() == False\
         or ccn3.isdigit() == False or ccn4.isdigit() == False or \
         exmm.isdigit() == False or exyy.isdigit() == False or \
-        excvv.isdigit() == False:
+        excvv.isdigit() == False or len(ccn1) != 4 or len(ccn2) != 4\
+        or len(ccn3) != 4 or len(ccn4) != 4 or len(excvv) != 3:
             warning = QMessageBox.question(self, 
                 'Wrong credit card number format.',"Wrong credit card number format.\nPlease make sure you entered the correct digits.",
+                 QMessageBox.Ok, QMessageBox.Ok)
+            proceed = False
+        elif len(fname) == 0 or len(lname) == 0 or \
+        fname.isdigit() == True or lname.isdigit() == True:
+            warning = QMessageBox.question(self, 
+                'Please enter your name.',"Name is incorrect. Please enter your name.",
                  QMessageBox.Ok, QMessageBox.Ok)
             proceed = False
         else:
@@ -401,7 +417,7 @@ class Ui(QWidget):
             self.bbidl.setText("Please take note of your booking ID: "+ sid)
             self.checkTab.setTabEnabled(3, False)
             self.checkTab.setTabEnabled(4, True)
-            self.seats.setText(str(len(seat)) + ' Ticket(s)')
+            self.seats.setText(str(len(seat)) + ' ticket(s)')
             self.price.setText('$' + str(tp))
             self.filmName_4.setText(movieDetails[mindex][1])
             self.cinemaName_4.setText(cinemaDetails[cindex][1])
