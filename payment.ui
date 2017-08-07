@@ -1531,7 +1531,7 @@
       <widget class="QPushButton" name="backButton_4">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>90</x>
          <y>370</y>
          <width>161</width>
          <height>41</height>
@@ -1544,7 +1544,7 @@
       <widget class="QPushButton" name="continueB4">
        <property name="geometry">
         <rect>
-         <x>550</x>
+         <x>530</x>
          <y>370</y>
          <width>161</width>
          <height>41</height>
@@ -1557,7 +1557,7 @@
       <widget class="QLabel" name="label_35">
        <property name="geometry">
         <rect>
-         <x>120</x>
+         <x>100</x>
          <y>80</y>
          <width>581</width>
          <height>271</height>
@@ -1576,7 +1576,7 @@
       <widget class="QWidget" name="verticalLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>120</x>
          <y>100</y>
          <width>541</width>
          <height>231</height>
@@ -1771,9 +1771,9 @@
       <widget class="QWidget" name="gridLayoutWidget_7">
        <property name="geometry">
         <rect>
-         <x>170</x>
+         <x>100</x>
          <y>150</y>
-         <width>431</width>
+         <width>571</width>
          <height>80</height>
         </rect>
        </property>
@@ -1944,9 +1944,9 @@
       <widget class="QLabel" name="label_43">
        <property name="geometry">
         <rect>
-         <x>170</x>
-         <y>100</y>
-         <width>371</width>
+         <x>90</x>
+         <y>90</y>
+         <width>591</width>
          <height>31</height>
         </rect>
        </property>
@@ -1960,13 +1960,16 @@
        <property name="text">
         <string>Your booking was successful!</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
       <widget class="QLabel" name="bbidl">
        <property name="geometry">
         <rect>
-         <x>160</x>
+         <x>90</x>
          <y>250</y>
-         <width>441</width>
+         <width>591</width>
          <height>31</height>
         </rect>
        </property>
@@ -1974,7 +1977,7 @@
         <string>BookingID</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
       <widget class="QPushButton" name="backHomeX">
@@ -1993,9 +1996,9 @@
       <widget class="QLabel" name="label_44">
        <property name="geometry">
         <rect>
-         <x>160</x>
+         <x>90</x>
          <y>140</y>
-         <width>451</width>
+         <width>591</width>
          <height>101</height>
         </rect>
        </property>

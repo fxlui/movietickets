@@ -179,6 +179,7 @@ class Ui(QWidget):
                 self.checkTab.setTabEnabled(2, False)
                 self.checkTab.setTabEnabled(3, False)
                 self.checkTab.setTabEnabled(4, False)
+                self.dateSelect.currentTextChanged.connect(lambda: self.setTime(cindex, mindex))
                 for i in range(1,13):
                     if i <= 9:
                         i = "0" + str(i)
@@ -189,16 +190,30 @@ class Ui(QWidget):
                 for l in ilist:
                     forlist = sessionDetails[l]
                     duplist.append(forlist[2])
-                    self.timeSelect.addItem(forlist[3])
+                    #self.timeSelect.addItem(forlist[3])
                 dup = list(set(duplist))
                 for i in list(dup):
                     self.dateSelect.addItem(i)
+                self.setTime(cindex, mindex)
                 for l in range(0,11):
                     for m in range(1,9):
                         ticnumbox = getattr(self, "tbox%d" % m)
                         l = str(l)
                         ticnumbox.addItem(l)
                 self.show()
+
+    def setTime(self, cid, mid):
+        date = self.dateSelect.currentText()
+        n = len(sessionDetails)
+        timelist = []
+        try: self.timeSelect.clear()
+        except Exception: pass
+        for i in range(n):
+            forlist = sessionDetails[i]
+            if forlist[0] == str(cid) and forlist[1] == str(mid) and forlist[2] == date:
+                timelist.append(forlist[3])
+        for times in timelist:
+            self.timeSelect.addItem(times)
 
     def buyTic2(self, mindex, cindex, ilist):
         ct1 = self.dateSelect.currentText()
